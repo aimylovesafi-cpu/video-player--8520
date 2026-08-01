@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#00FF88">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Video Player</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #050507;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-5xl mx-auto p-4 pt-6 mt-10 glassmorphism">
+        <div class="flex justify-center mb-4">
+            <img src="logo.png" alt="Logo" class="h-12 w-12">
+            <h1 class="text-3xl text-white ml-4">Luxury Video Player 🎵</h1>
+        </div>
+        <input type="file" id="file-picker" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept=".mp4, .mkv, .avi, .mov, .wmv">
+        <div class="flex justify-center mt-4">
+            <video id="video-player" class="max-w-full h-auto" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button id="play-pause" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Play 🎵
+            </button>
+            <button id="stop" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4">
+                Stop ⏹️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const filePicker = document.getElementById('file-picker');
+        const videoPlayer = document.getElementById('video-player');
+        const playPause = document.getElementById('play-pause');
+        const stop = document.getElementById('stop');
+
+        filePicker.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            const url = URL.createObjectURL(file);
+            videoPlayer.src = url;
+        });
+
+        playPause.addEventListener('click', () => {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+                playPause.textContent = 'Pause ⏸️';
+            } else {
+                videoPlayer.pause();
+                playPause.textContent = 'Play 🎵';
+            }
+        });
+
+        stop.addEventListener('click', () => {
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0;
+            playPause.textContent = 'Play 🎵';
+        });
+    </script>
+<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');</script></body>
+</html>
